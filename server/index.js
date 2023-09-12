@@ -1,13 +1,18 @@
 const doubts = require("./data/doubts");
 const express = require("express");
 const dotenv = require("dotenv");
+const connectDB = require("./config/db");
+const studentRoutes = require("./routes/studentRoutes");
+const { notFound, errorHandler } = require("./middlewares/errorMidleware");
 
 const app = express();
 dotenv.config();
+connectDB();
+app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("API is running");
-});
+// app.get("/", (req, res) => {
+//   res.send("API is running");
+// });
 
 app.get("/api/doubts", (req, res) => {
   res.json(doubts);
@@ -20,6 +25,11 @@ app.get("/api/doubts/:creator_id", (req, res) => {
 
   res.send(doubt_by_creator);
 });
+
+app.use("/api/students", studentRoutes);
+
+app.use(notFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
