@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../actions/studentActions";
 import ErrorMessage from "../components/ErrorMessage";
 import Loading from "../components/Loading";
 
@@ -17,18 +18,19 @@ const Studentregister = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState(null);
   const [picMessage, setPicMessage] = useState(null);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const userInfo = localStorage.getItem("userInfo");
+  const dispatch = useDispatch();
 
+  const studentRegister = useSelector((state) => state.studentRegister);
+  const { loading, error, userInfo } = studentRegister;
+
+  useEffect(() => {
     if (userInfo) {
       navigate("/mydoubts");
     }
-  }, [navigate]);
+  }, [navigate, userInfo]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -37,34 +39,7 @@ const Studentregister = () => {
       setMessage("Password and Confirm-Password do not Match");
     } else {
       setMessage(false);
-      try {
-        const config = {
-          headers: {
-            "Content-type": "application/json",
-          },
-        };
-
-        setLoading(true);
-
-        const { data } = await axios.post(
-          "/api/students",
-          {
-            name,
-            email,
-            password,
-            pic,
-          },
-          config
-        );
-
-        console.log(data);
-        localStorage.setItem("userInfo", JSON.stringify(data));
-
-        setLoading(false);
-      } catch (error) {
-        setError(error.response.data.message);
-        setLoading(false);
-      }
+      dispatch(register(name, email, password, pic));
     }
   };
 

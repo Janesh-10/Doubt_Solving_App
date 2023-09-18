@@ -4,9 +4,21 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../actions/studentActions";
 
 function Headernav() {
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const studentLogin = useSelector((state) => state.studentLogin);
+  const { userInfo } = studentLogin;
+
+  const logoutHandler = () => {
+    dispatch(logout());
+    navigate("/");
+  };
 
   return (
     <Navbar bg="dark" data-bs-theme="dark">
@@ -21,12 +33,7 @@ function Headernav() {
             <NavDropdown title="User" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">My Profile</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item
-                onClick={() => {
-                  localStorage.removeItem("userInfo");
-                  navigate("/");
-                }}
-              >
+              <NavDropdown.Item onClick={logoutHandler}>
                 Logout
               </NavDropdown.Item>
             </NavDropdown>
