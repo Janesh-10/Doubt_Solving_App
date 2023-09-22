@@ -9,10 +9,20 @@ import {
   studentLoginReducer,
   studentRegisterReducer,
 } from "./reducers/studentReducers";
+import {
+  doubtCreateReducer,
+  doubtDeleteReducer,
+  doubtListReducer,
+  doubtUpdateReducer,
+} from "./reducers/doubtReducers";
 
 const reducer = combineReducers({
   studentLogin: studentLoginReducer,
   studentRegister: studentRegisterReducer,
+  doubtList: doubtListReducer,
+  doubtCreate: doubtCreateReducer,
+  doubtUpdate: doubtUpdateReducer,
+  doubtDelete: doubtDeleteReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

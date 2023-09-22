@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -6,26 +6,53 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Badge from "react-bootstrap/Badge";
 import Accordion from "react-bootstrap/Accordion";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteDoubtAction, listDoubts } from "../actions/doubtActions";
+import Loading from "../components/Loading";
+import ErrorMessage from "../components/ErrorMessage";
 
 const MyDoubts = () => {
-  const [doubts, setDoubts] = useState([]);
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const doubtList = useSelector((state) => state.doubtList);
+  const { loading, error, doubts } = doubtList;
+
+  const studentLogin = useSelector((state) => state.studentLogin);
+  const { userInfo } = studentLogin;
+
+  const doubtCreate = useSelector((state) => state.doubtCreate);
+  const { success: successCreate } = doubtCreate;
+
+  const doubtUpdate = useSelector((state) => state.doubtUpdate);
+  const { success: successUpdate } = doubtUpdate;
+
+  const doubtDelete = useSelector((state) => state.doubtDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = doubtDelete;
 
   useEffect(() => {
-    const fetchDoubts = async () => {
-      const { data } = await axios.get("/api/doubts");
-
-      setDoubts(data);
-
-      console.log(doubts);
-    };
-
-    fetchDoubts();
-  }, []);
+    dispatch(listDoubts());
+    if (!userInfo) {
+      navigate("/");
+    }
+  }, [
+    dispatch,
+    navigate,
+    userInfo,
+    successCreate,
+    successUpdate,
+    successDelete,
+  ]);
 
   const deleteHandler = (id) => {
     if (window.confirm("Are you sure?")) {
+      dispatch(deleteDoubtAction(id));
     }
   };
 
@@ -55,7 +82,13 @@ const MyDoubts = () => {
           </Link>
         </Button>
       </Row>
-      {doubts.map((doubt) => (
+      {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+      {loading && <Loading />}
+      {errorDelete && (
+        <ErrorMessage variant="danger">{errorDelete}</ErrorMessage>
+      )}
+      {loadingDelete && <Loading />}
+      {doubts?.reverse().map((doubt) => (
         <Row className="mt-3" key={doubt._id}>
           <Accordion>
             <Accordion.Item eventKey="0">
@@ -101,7 +134,7 @@ const MyDoubts = () => {
                     <blockquote className="blockquote mb-0">
                       <p>{doubt.description}</p>
                       <footer className="blockquote-footer">
-                        Created On - date
+                        Created On - {doubt.createdAt.substring(0, 10)}
                       </footer>
                     </blockquote>
                   </Card.Body>
