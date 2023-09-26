@@ -8,6 +8,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import {
   studentLoginReducer,
   studentRegisterReducer,
+  studentUpdateReducer,
 } from "./reducers/studentReducers";
 import {
   doubtCreateReducer,
@@ -23,6 +24,7 @@ const reducer = combineReducers({
   doubtCreate: doubtCreateReducer,
   doubtUpdate: doubtUpdateReducer,
   doubtDelete: doubtDeleteReducer,
+  studentUpdate: studentUpdateReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

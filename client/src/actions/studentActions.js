@@ -6,6 +6,9 @@ import {
   STUDENT_REGISTER_FAIL,
   STUDENT_REGISTER_REQUEST,
   STUDENT_REGISTER_SUCCESS,
+  STUDENT_UPDATE_FAIL,
+  STUDENT_UPDATE_REQUEST,
+  STUDENT_UPDATE_SUCCESS,
 } from "../constants/studentConstants";
 import axios from "axios";
 
@@ -68,6 +71,39 @@ export const register = (name, email, password, pic) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: STUDENT_REGISTER_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const updateProfile = (user) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: STUDENT_UPDATE_REQUEST });
+
+    const {
+      studentLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.post("/api/students/profile", user, config);
+
+    dispatch({ type: STUDENT_UPDATE_SUCCESS, payload: data });
+
+    dispatch({ type: STUDENT_LOGIN_SUCCESS, payload: data });
+
+    localStorage.setItem("userInfo", JSON.stringify(data));
+  } catch (error) {
+    dispatch({
+      type: STUDENT_UPDATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

@@ -6,6 +6,9 @@ import {
   STUDENT_REGISTER_FAIL,
   STUDENT_REGISTER_REQUEST,
   STUDENT_REGISTER_SUCCESS,
+  STUDENT_UPDATE_FAIL,
+  STUDENT_UPDATE_REQUEST,
+  STUDENT_UPDATE_SUCCESS,
 } from "../constants/studentConstants";
 
 export const studentLoginReducer = (state = {}, action) => {
@@ -31,6 +34,19 @@ export const studentRegisterReducer = (state = {}, action) => {
       return { loading: false, userInfo: action.payload };
     case STUDENT_REGISTER_FAIL:
       return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const studentUpdateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case STUDENT_UPDATE_REQUEST:
+      return { loading: true };
+    case STUDENT_UPDATE_SUCCESS:
+      return { loading: false, userInfo: action.payload, success: true };
+    case STUDENT_UPDATE_FAIL:
+      return { loading: false, error: action.payload, success: false };
     default:
       return state;
   }

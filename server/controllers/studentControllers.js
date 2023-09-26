@@ -54,4 +54,31 @@ const authStudent = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { registerStudent, authStudent };
+const updateStudentProfile = asyncHandler(async (req, res) => {
+  const student = await Student.findById(req.student._id);
+
+  if (student) {
+    student.name = req.body.name || student.name;
+    student.email = req.body.email || student.email;
+    student.pic = req.body.pic || student.pic;
+    if (req.body.password) {
+      student.password = req.body.password;
+    }
+
+    const updatedStudent = await student.save();
+
+    res.json({
+      _id: updatedStudent._id,
+      name: updatedStudent.name,
+      email: updatedStudent.email,
+      pic: updatedStudent.pic,
+      isAdmin: updatedStudent.isAdmin,
+      token: generateToken(updatedStudent._id),
+    });
+  } else {
+    res.status(404);
+    throw new Error("Student Not Found");
+  }
+});
+
+module.exports = { registerStudent, authStudent, updateStudentProfile };

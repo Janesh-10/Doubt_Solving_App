@@ -19,6 +19,11 @@ const doubtSchema = mongoose.Schema(
       required: true,
       ref: "Student",
     },
+    solution_status: {
+      type: String,
+      required: true,
+      default: "unsolved",
+    },
   },
   {
     timestamps: true,

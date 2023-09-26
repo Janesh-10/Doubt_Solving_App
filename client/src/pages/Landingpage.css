@@ -2,13 +2,13 @@
   min-height: 93vh;
   display: flex;
   align-items: center;
-  background-image: url(../../public/background.jpg);
+  background-image: url(../../public/doubtsolving1.webp);
   background-position: center;
   background-size: cover;
 }
 
 .title {
-  font-size: 95px;
+  font-size: 68px;
 }
 
 .subtitle {

@@ -1,19 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Landingpage.css";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import { useNavigate } from "react-router-dom";
 
 const Landingpage = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const userInfo = localStorage.getItem("userInfo");
+    if (userInfo) {
+      navigate("/mydoubts");
+    }
+  }, [navigate]);
+
   return (
     <div className="main">
       <Container>
         <Row>
           <div className="intro-text">
             <div>
-              <h1 className="title">Welcome to Doubt Solver</h1>
+              <h3 className="title">Welcome to Doubt Solver</h3>
               <p className="subtitle">
                 A single place to find solutions of all your doubts
               </p>
@@ -22,10 +32,12 @@ const Landingpage = () => {
         </Row>
         <Row>
           <Col>
-            <Card style={{ width: "18rem" }}>
+            <Card style={{ width: "20rem" }}>
               <Card.Body>
                 <Card.Title>Teacher Portal</Card.Title>
-                <Card.Text>Teachers login or register here</Card.Text>
+                <Card.Text>
+                  All Teachers please login or register here
+                </Card.Text>
                 <Container>
                   <Row>
                     <Col>
@@ -40,17 +52,23 @@ const Landingpage = () => {
             </Card>
           </Col>
           <Col>
-            <Card style={{ width: "18rem" }} className="ms-auto">
+            <Card style={{ width: "20rem" }} className="ms-auto">
               <Card.Body>
                 <Card.Title>Student Portal</Card.Title>
-                <Card.Text>Students login or register here</Card.Text>
+                <Card.Text>
+                  All Students please login or register here
+                </Card.Text>
                 <Container>
                   <Row>
                     <Col>
-                      <Button variant="primary">Login</Button>
+                      <Button variant="primary" href="/studentlogin">
+                        Login
+                      </Button>
                     </Col>
                     <Col>
-                      <Button variant="success">Register</Button>
+                      <Button variant="success" href="/studentregister">
+                        Register
+                      </Button>
                     </Col>
                   </Row>
                 </Container>

@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+import React, { useEffect, useRef, useState } from "react";
+import { Button, Card, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,6 +18,8 @@ const Studentregister = () => {
   const [message, setMessage] = useState(null);
   const [picMessage, setPicMessage] = useState(null);
 
+  const fileRef = useRef(null);
+
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -34,11 +35,12 @@ const Studentregister = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-
-    if (password !== confirmPassword) {
+    if (password.length < 5) {
+      setMessage("Password should have atleast 5 characters");
+    } else if (password !== confirmPassword) {
       setMessage("Password and Confirm-Password do not Match");
     } else {
-      setMessage(false);
+      setMessage(null);
       dispatch(register(name, email, password, pic));
     }
   };
@@ -68,8 +70,19 @@ const Studentregister = () => {
           console.log(err);
         });
     } else {
-      return setPicMessage("Please Select an Image");
+      return setPicMessage("Please Select an Image of type jpg or png");
     }
+  };
+
+  const resetHandler = () => {
+    setEmail("");
+    setName("");
+    setPic(
+      "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
+    );
+    setPassword("");
+    setConfirmPassword("");
+    fileRef.current.value = null;
   };
 
   return (
@@ -78,48 +91,51 @@ const Studentregister = () => {
       {message && <ErrorMessage variant="danger">{message}</ErrorMessage>}
       {message && <ErrorMessage variant="danger">{error}</ErrorMessage>}
       {loading && <Loading />}
-      <Form onSubmit={submitHandler}>
-        <Form.Group className="mb-3" controlId="formBasicName">
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Enter name"
-          />
-        </Form.Group>
+      <Card>
+        <Card.Header>Student Registration</Card.Header>
+        <Card.Body>
+          <Form onSubmit={submitHandler}>
+            <Form.Group className="mb-3" controlId="formBasicName">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Enter name"
+              />
+            </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter email"
-          />
-        </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter email"
+              />
+            </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-          />
-        </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+              />
+            </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
-          <Form.Label>Confirm Password</Form.Label>
-          <Form.Control
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            placeholder="Confirm Password"
-          />
-        </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
+              <Form.Label>Confirm Password</Form.Label>
+              <Form.Control
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Confirm Password"
+              />
+            </Form.Group>
 
-        {/* <Form.Group className="mb-3" controlId="pic">
+            {/* <Form.Group className="mb-3" controlId="pic">
           <Form.Label>Profile Picture</Form.Label>
           <Form.File
             id="custom-file"
@@ -128,23 +144,29 @@ const Studentregister = () => {
             custom
           />
         </Form.Group> */}
-        {picMessage && (
-          <ErrorMessage variant="danger">{picMessage}</ErrorMessage>
-        )}
-        <Form.Group controlId="formFile" className="mb-3">
-          <Form.Label>Profile Picture</Form.Label>
-          <Form.Control
-            type="file"
-            onChange={(e) => postDetails(e.target.files[0])}
-          />
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          REGISTER
-        </Button>
-        <h6>
-          Already have an Account <Link to="/studentlogin">Login</Link> here
-        </h6>
-      </Form>
+            {picMessage && (
+              <ErrorMessage variant="danger">{picMessage}</ErrorMessage>
+            )}
+            <Form.Group controlId="formFile" className="mb-3">
+              <Form.Label>Profile Picture</Form.Label>
+              <Form.Control
+                ref={fileRef}
+                type="file"
+                onChange={(e) => postDetails(e.target.files[0])}
+              />
+            </Form.Group>
+            <Button variant="primary" type="submit">
+              REGISTER
+            </Button>
+            <Button className="mx-2" onClick={resetHandler} variant="danger">
+              Reset Feilds
+            </Button>
+            <p>
+              Already have an Account <Link to="/studentlogin">Login</Link> here
+            </p>
+          </Form>
+        </Card.Body>
+      </Card>
     </div>
   );
 };

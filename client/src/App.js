@@ -4,6 +4,7 @@ import Headernav from "./components/Headernav";
 import CreateDoubt from "./pages/CreateDoubt";
 import Landingpage from "./pages/Landingpage";
 import MyDoubts from "./pages/MyDoubts";
+import ProfileScreen from "./pages/ProfileScreen";
 import SingleDoubt from "./pages/SingleDoubt";
 import Studentlogin from "./pages/Studentlogin";
 import Studentregister from "./pages/Studentregister";
@@ -20,6 +21,7 @@ function App() {
           <Route path="/studentlogin" element={<Studentlogin />} />
           <Route path="/studentregister" element={<Studentregister />} />
           <Route path="/createdoubt" element={<CreateDoubt />} />
+          <Route path="/profile" element={<ProfileScreen />} />
           <Route path="/doubt/:id" element={<SingleDoubt />} />
         </Routes>
       </main>
