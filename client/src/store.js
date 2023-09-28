@@ -16,6 +16,10 @@ import {
   doubtListReducer,
   doubtUpdateReducer,
 } from "./reducers/doubtReducers";
+import {
+  teacherLoginReducer,
+  teacherRegisterReducer,
+} from "./reducers/teacherReducers";
 
 const reducer = combineReducers({
   studentLogin: studentLoginReducer,
@@ -25,14 +29,21 @@ const reducer = combineReducers({
   doubtUpdate: doubtUpdateReducer,
   doubtDelete: doubtDeleteReducer,
   studentUpdate: studentUpdateReducer,
+  teacherLogin: teacherLoginReducer,
+  teacherRegister: teacherRegisterReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo"))
   : null;
 
+const teacherInfoFromStorage = localStorage.getItem("teacherInfo")
+  ? JSON.parse(localStorage.getItem("teacherInfo"))
+  : null;
+
 const initialState = {
   studentLogin: { userInfo: userInfoFromStorage },
+  teacherLogin: { teacherInfo: teacherInfoFromStorage },
 };
 
 const middleware = [thunk];

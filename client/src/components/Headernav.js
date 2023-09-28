@@ -40,9 +40,7 @@ function Headernav() {
               </NavDropdown>
             </Nav>
           ) : (
-            <Nav>
-              <Nav.Link href="/studentlogin">login</Nav.Link>
-            </Nav>
+            <div></div>
           )}
         </Navbar.Collapse>
       </Container>

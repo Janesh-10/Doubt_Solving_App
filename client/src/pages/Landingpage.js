@@ -41,10 +41,14 @@ const Landingpage = () => {
                 <Container>
                   <Row>
                     <Col>
-                      <Button variant="primary">Login</Button>
+                      <Button variant="primary" href="teacherlogin">
+                        Login
+                      </Button>
                     </Col>
                     <Col>
-                      <Button variant="success">Register</Button>
+                      <Button variant="success" href="teacherregister">
+                        Register
+                      </Button>
                     </Col>
                   </Row>
                 </Container>

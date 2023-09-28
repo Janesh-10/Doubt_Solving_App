@@ -8,6 +8,9 @@ import ProfileScreen from "./pages/ProfileScreen";
 import SingleDoubt from "./pages/SingleDoubt";
 import Studentlogin from "./pages/Studentlogin";
 import Studentregister from "./pages/Studentregister";
+import Teacherregister from "./pages/Teacherregister";
+import Teacherlogin from "./pages/Teacherlogin";
+import TeacherDoubts from "./pages/TeacherDoubts";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -22,6 +25,9 @@ function App() {
           <Route path="/studentregister" element={<Studentregister />} />
           <Route path="/createdoubt" element={<CreateDoubt />} />
           <Route path="/profile" element={<ProfileScreen />} />
+          <Route path="/teacherregister" element={<Teacherregister />} />
+          <Route path="/teacherlogin" element={<Teacherlogin />} />
+          <Route path="/teacherdoubts" element={<TeacherDoubts />} />
           <Route path="/doubt/:id" element={<SingleDoubt />} />
         </Routes>
       </main>
