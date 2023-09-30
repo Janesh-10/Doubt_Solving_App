@@ -5,12 +5,14 @@ const {
   getDoubtById,
   UpdateDoubt,
   DeleteDoubt,
+  getDoubtsSubjects,
 } = require("../controllers/doubtControllers");
-const { protect } = require("../middlewares/authMiddleware");
+const { protect, protectTeacher } = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
 router.route("/").get(protect, getDoubts);
+router.route("/teacherdoubts").get(protectTeacher, getDoubtsSubjects);
 router.route("/create").post(protect, CreateDoubt);
 router
   .route("/:id")

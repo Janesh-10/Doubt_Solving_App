@@ -24,6 +24,10 @@ const doubtSchema = mongoose.Schema(
       required: true,
       default: "unsolved",
     },
+    creator_email: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

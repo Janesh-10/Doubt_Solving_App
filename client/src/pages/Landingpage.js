@@ -12,8 +12,12 @@ const Landingpage = () => {
 
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
+    const teacherInfo = localStorage.getItem("teacherInfo");
     if (userInfo) {
       navigate("/mydoubts");
+    }
+    if (teacherInfo) {
+      navigate("/teacherdoubts");
     }
   }, [navigate]);
 

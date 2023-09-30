@@ -19,6 +19,7 @@ const CreateDoubt = asyncHandler(async (req, res) => {
       title,
       description,
       subject,
+      creator_email: req.student.email,
     });
 
     const createdDoubt = await doubt.save();
@@ -77,10 +78,17 @@ const DeleteDoubt = asyncHandler(async (req, res) => {
   }
 });
 
+const getDoubtsSubjects = asyncHandler(async (req, res) => {
+  const teacher_subjects = req.teacher.subjects;
+  const doubts = await Doubt.find({ subject: { $in: teacher_subjects } });
+  res.json(doubts);
+});
+
 module.exports = {
   getDoubts,
   CreateDoubt,
   getDoubtById,
   UpdateDoubt,
   DeleteDoubt,
+  getDoubtsSubjects,
 };
