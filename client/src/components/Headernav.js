@@ -55,7 +55,9 @@ function Headernav() {
             <Nav className="me-auto">
               <Nav.Link href="/teacherdoubts">My Doubts</Nav.Link>
               <NavDropdown title={teacherInfo?.name} id="basic-nav-dropdown">
-                <NavDropdown.Item href="#">My Profile</NavDropdown.Item>
+                <NavDropdown.Item href="/teacherprofile">
+                  My Profile
+                </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={teacherlogoutHandler}>
                   Logout

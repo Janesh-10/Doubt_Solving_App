@@ -9,6 +9,9 @@ import {
   DOUBT_LIST_FAIL,
   DOUBT_LIST_REQUEST,
   DOUBT_LIST_SUCCESS,
+  DOUBT_TEACHER_LIST_FAIL,
+  DOUBT_TEACHER_LIST_REQUEST,
+  DOUBT_TEACHER_LIST_SUCCESS,
   DOUBT_UPDATE_FAIL,
   DOUBT_UPDATE_REQUEST,
   DOUBT_UPDATE_SUCCESS,
@@ -157,6 +160,40 @@ export const deleteDoubtAction = (id) => async (dispatch, getState) => {
         : error.message;
     dispatch({
       type: DOUBT_DELETE_FAIL,
+      payload: message,
+    });
+  }
+};
+
+export const listTeacherDoubts = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: DOUBT_TEACHER_LIST_REQUEST,
+    });
+
+    const {
+      teacherLogin: { teacherInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${teacherInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(`/api/doubts/teacherdoubts`, config);
+
+    dispatch({
+      type: DOUBT_TEACHER_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({
+      type: DOUBT_TEACHER_LIST_FAIL,
       payload: message,
     });
   }

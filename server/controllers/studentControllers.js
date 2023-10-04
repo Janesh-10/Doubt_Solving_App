@@ -1,5 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Student = require("../models/studentModels");
+const Post = require("../models/postModels");
+const Doubt = require("../models/doubtModels");
 const generateToken = require("../utils/generateToken");
 
 const registerStudent = asyncHandler(async (req, res) => {
@@ -58,6 +60,7 @@ const updateStudentProfile = asyncHandler(async (req, res) => {
   const student = await Student.findById(req.student._id);
 
   if (student) {
+    const pre_email = student.email;
     student.name = req.body.name || student.name;
     student.email = req.body.email || student.email;
     student.pic = req.body.pic || student.pic;
@@ -66,6 +69,22 @@ const updateStudentProfile = asyncHandler(async (req, res) => {
     }
 
     const updatedStudent = await student.save();
+
+    const posts = Post.find();
+
+    const filter = { creator_email: pre_email };
+
+    const updatePost = {
+      $set: {
+        creator_email: student.email,
+      },
+    };
+
+    const result = await posts.updateMany(filter, updatePost);
+
+    const doubts = Doubt.find();
+
+    const doubtresult = await doubts.updateMany(filter, updatePost);
 
     res.json({
       _id: updatedStudent._id,

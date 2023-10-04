@@ -122,8 +122,12 @@ const MyDoubts = () => {
                           <Accordion.Header>{doubt.title}</Accordion.Header>
                         </span>
                         <div>
-                          <Button variant="info" style={{ color: "white" }}>
-                            View Solution
+                          <Button
+                            variant="info"
+                            style={{ color: "white" }}
+                            href={`/queries/${doubt._id}`}
+                          >
+                            View Solutions
                           </Button>
                           <Button
                             variant="primary"
@@ -145,9 +149,10 @@ const MyDoubts = () => {
                         <Card.Body>
                           <h4>
                             <Badge bg="success">
-                              Subject - {doubt.subject}
+                              Status - {doubt.solution_status}
                             </Badge>
                           </h4>
+                          <h5>Subject - {doubt.subject}</h5>
                           <blockquote className="blockquote mb-0">
                             <p>{doubt.description}</p>
                             <footer className="blockquote-footer">
@@ -190,8 +195,12 @@ const MyDoubts = () => {
                           <Accordion.Header>{doubt.title}</Accordion.Header>
                         </span>
                         <div>
-                          <Button variant="info" style={{ color: "white" }}>
-                            View Doubt
+                          <Button
+                            variant="info"
+                            style={{ color: "white" }}
+                            href={`/queries/${doubt._id}`}
+                          >
+                            View Solutions
                           </Button>
                           <Button
                             variant="primary"
@@ -213,9 +222,10 @@ const MyDoubts = () => {
                         <Card.Body>
                           <h4>
                             <Badge bg="success">
-                              Subject - {doubt.subject}
+                              Status - {doubt.solution_status}
                             </Badge>
                           </h4>
+                          <h5>Subject - {doubt.subject}</h5>
                           <blockquote className="blockquote mb-0">
                             <p>{doubt.description}</p>
                             <footer className="blockquote-footer">
@@ -258,8 +268,12 @@ const MyDoubts = () => {
                           <Accordion.Header>{doubt.title}</Accordion.Header>
                         </span>
                         <div>
-                          <Button variant="info" style={{ color: "white" }}>
-                            View Doubt
+                          <Button
+                            variant="info"
+                            style={{ color: "white" }}
+                            href={`/queries/${doubt._id}`}
+                          >
+                            View Solutions
                           </Button>
                           <Button
                             variant="primary"
@@ -281,9 +295,10 @@ const MyDoubts = () => {
                         <Card.Body>
                           <h4>
                             <Badge bg="success">
-                              Subject - {doubt.subject}
+                              Status - {doubt.solution_status}
                             </Badge>
                           </h4>
+                          <h5>Subject - {doubt.subject}</h5>
                           <blockquote className="blockquote mb-0">
                             <p>{doubt.description}</p>
                             <footer className="blockquote-footer">

@@ -16,7 +16,7 @@ const CreateDoubt = () => {
   const dispatch = useDispatch();
 
   const doubtCreate = useSelector((state) => state.doubtCreate);
-  const { loading, error, doubt } = doubtCreate;
+  const { loading, error } = doubtCreate;
 
   const resetHandler = () => {
     setTitle("");

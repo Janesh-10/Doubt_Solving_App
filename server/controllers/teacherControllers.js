@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const Teacher = require("../models/teacherModels");
+const Post = require("../models/postModels");
 const generateToken = require("../utils/generateToken");
 
 const registerTeacher = asyncHandler(async (req, res) => {
@@ -57,4 +58,46 @@ const authTeacher = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { registerTeacher, authTeacher };
+const updateteacherProfile = asyncHandler(async (req, res) => {
+  const teacher = await Teacher.findById(req.teacher._id);
+
+  if (teacher) {
+    const pre_email = teacher.email;
+    teacher.name = req.body.name || teacher.name;
+    teacher.email = req.body.email || teacher.email;
+    teacher.pic = req.body.pic || teacher.pic;
+    teacher.subjects = req.body.subjects || teacher.subjects;
+    if (req.body.password) {
+      teacher.password = req.body.password;
+    }
+
+    const updatedTeacher = await teacher.save();
+
+    const posts = Post.find();
+
+    const filter = { creator_email: pre_email };
+
+    const updatePost = {
+      $set: {
+        creator_email: teacher.email,
+      },
+    };
+
+    const result = await posts.updateMany(filter, updatePost);
+
+    res.json({
+      _id: updatedTeacher._id,
+      name: updatedTeacher.name,
+      email: updatedTeacher.email,
+      pic: updatedTeacher.pic,
+      isAdmin: updatedTeacher.isAdmin,
+      subjects: updatedTeacher.subjects,
+      token: generateToken(updatedTeacher._id),
+    });
+  } else {
+    res.status(404);
+    throw new Error("Teacher Not Found");
+  }
+});
+
+module.exports = { registerTeacher, authTeacher, updateteacherProfile };

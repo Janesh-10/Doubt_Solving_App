@@ -11,6 +11,9 @@ import {
   DOUBT_DELETE_REQUEST,
   DOUBT_DELETE_SUCCESS,
   DOUBT_DELETE_FAIL,
+  DOUBT_TEACHER_LIST_REQUEST,
+  DOUBT_TEACHER_LIST_SUCCESS,
+  DOUBT_TEACHER_LIST_FAIL,
 } from "../constants/doubtConstants";
 
 export const doubtListReducer = (state = { doubts: [] }, action) => {
@@ -63,6 +66,23 @@ export const doubtDeleteReducer = (state = {}, action) => {
       return { loading: false, success: true };
     case DOUBT_DELETE_FAIL:
       return { loading: false, error: action.payload, success: false };
+
+    default:
+      return state;
+  }
+};
+
+export const doubtTeacherListReducer = (
+  state = { teacherdoubts: [] },
+  action
+) => {
+  switch (action.type) {
+    case DOUBT_TEACHER_LIST_REQUEST:
+      return { loading: true };
+    case DOUBT_TEACHER_LIST_SUCCESS:
+      return { loading: false, teacherdoubts: action.payload };
+    case DOUBT_TEACHER_LIST_FAIL:
+      return { loading: false, error: action.payload };
 
     default:
       return state;

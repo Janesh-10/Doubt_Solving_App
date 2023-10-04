@@ -7,6 +7,9 @@ import {
   TEACHER_REGISTER_FAIL,
   TEACHER_REGISTER_REQUEST,
   TEACHER_REGISTER_SUCCESS,
+  TEACHER_UPDATE_FAIL,
+  TEACHER_UPDATE_REQUEST,
+  TEACHER_UPDATE_SUCCESS,
 } from "../constants/teacherConstants";
 
 export const login = (email, password) => async (dispatch) => {
@@ -76,3 +79,36 @@ export const register =
       });
     }
   };
+
+export const updateProfile = (user) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: TEACHER_UPDATE_REQUEST });
+
+    const {
+      teacherLogin: { teacherInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${teacherInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.post("/api/teachers/profile", user, config);
+
+    dispatch({ type: TEACHER_UPDATE_SUCCESS, payload: data });
+
+    dispatch({ type: TEACHER_LOGIN_SUCCESS, payload: data });
+
+    localStorage.setItem("teacherInfo", JSON.stringify(data));
+  } catch (error) {
+    dispatch({
+      type: TEACHER_UPDATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};

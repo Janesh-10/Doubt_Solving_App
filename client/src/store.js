@@ -14,12 +14,19 @@ import {
   doubtCreateReducer,
   doubtDeleteReducer,
   doubtListReducer,
+  doubtTeacherListReducer,
   doubtUpdateReducer,
 } from "./reducers/doubtReducers";
 import {
   teacherLoginReducer,
   teacherRegisterReducer,
+  teacherUpdateReducer,
 } from "./reducers/teacherReducers";
+import {
+  postListReducer,
+  queryCreateReducer,
+  solutionCreateReducer,
+} from "./reducers/postReducers";
 
 const reducer = combineReducers({
   studentLogin: studentLoginReducer,
@@ -31,6 +38,11 @@ const reducer = combineReducers({
   studentUpdate: studentUpdateReducer,
   teacherLogin: teacherLoginReducer,
   teacherRegister: teacherRegisterReducer,
+  teacherdoubtList: doubtTeacherListReducer,
+  postList: postListReducer,
+  solutionCreate: solutionCreateReducer,
+  queryCreate: queryCreateReducer,
+  teacherUpdate: teacherUpdateReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

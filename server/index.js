@@ -1,10 +1,10 @@
-const doubts = require("./data/doubts");
 const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const studentRoutes = require("./routes/studentRoutes");
 const doubtRoutes = require("./routes/doubtRoutes");
 const teacherRoutes = require("./routes/teacherRoutes");
+const postRoutes = require("./routes/postRoutes");
 const { notFound, errorHandler } = require("./middlewares/errorMidleware");
 
 const app = express();
@@ -21,6 +21,8 @@ app.use("/api/doubts", doubtRoutes);
 app.use("/api/students", studentRoutes);
 
 app.use("/api/teachers", teacherRoutes);
+
+app.use("/api/posts", postRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
