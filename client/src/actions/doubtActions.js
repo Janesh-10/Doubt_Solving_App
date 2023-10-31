@@ -12,6 +12,12 @@ import {
   DOUBT_TEACHER_LIST_FAIL,
   DOUBT_TEACHER_LIST_REQUEST,
   DOUBT_TEACHER_LIST_SUCCESS,
+  DOUBT_UPDATESOLVE_FAIL,
+  DOUBT_UPDATESOLVE_REQUEST,
+  DOUBT_UPDATESOLVE_SUCCESS,
+  DOUBT_UPDATEUNSOLVE_FAIL,
+  DOUBT_UPDATEUNSOLVE_REQUEST,
+  DOUBT_UPDATEUNSOLVE_SUCCESS,
   DOUBT_UPDATE_FAIL,
   DOUBT_UPDATE_REQUEST,
   DOUBT_UPDATE_SUCCESS,
@@ -194,6 +200,73 @@ export const listTeacherDoubts = () => async (dispatch, getState) => {
         : error.message;
     dispatch({
       type: DOUBT_TEACHER_LIST_FAIL,
+      payload: message,
+    });
+  }
+};
+
+export const updateDoubtSolveAction = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: DOUBT_UPDATESOLVE_REQUEST,
+    });
+
+    const {
+      studentLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(`/api/doubts/solved/${id}`, {}, config);
+    dispatch({
+      type: DOUBT_UPDATESOLVE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({
+      type: DOUBT_UPDATESOLVE_FAIL,
+      payload: message,
+    });
+  }
+};
+
+export const updateDoubtUnsolveAction = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: DOUBT_UPDATEUNSOLVE_REQUEST,
+    });
+
+    const {
+      studentLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(`/api/doubts/unsolved/${id}`, {}, config);
+
+    dispatch({
+      type: DOUBT_UPDATEUNSOLVE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({
+      type: DOUBT_UPDATEUNSOLVE_FAIL,
       payload: message,
     });
   }

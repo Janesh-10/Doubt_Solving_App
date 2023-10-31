@@ -14,6 +14,12 @@ import {
   DOUBT_TEACHER_LIST_REQUEST,
   DOUBT_TEACHER_LIST_SUCCESS,
   DOUBT_TEACHER_LIST_FAIL,
+  DOUBT_UPDATESOLVE_REQUEST,
+  DOUBT_UPDATESOLVE_SUCCESS,
+  DOUBT_UPDATESOLVE_FAIL,
+  DOUBT_UPDATEUNSOLVE_REQUEST,
+  DOUBT_UPDATEUNSOLVE_SUCCESS,
+  DOUBT_UPDATEUNSOLVE_FAIL,
 } from "../constants/doubtConstants";
 
 export const doubtListReducer = (state = { doubts: [] }, action) => {
@@ -83,6 +89,34 @@ export const doubtTeacherListReducer = (
       return { loading: false, teacherdoubts: action.payload };
     case DOUBT_TEACHER_LIST_FAIL:
       return { loading: false, error: action.payload };
+
+    default:
+      return state;
+  }
+};
+
+export const doubtUpdateSolveReducer = (state = {}, action) => {
+  switch (action.type) {
+    case DOUBT_UPDATESOLVE_REQUEST:
+      return { loading: true };
+    case DOUBT_UPDATESOLVE_SUCCESS:
+      return { loading: false, success: true };
+    case DOUBT_UPDATESOLVE_FAIL:
+      return { loading: false, error: action.payload, success: false };
+
+    default:
+      return state;
+  }
+};
+
+export const doubtUpdateUnsolveReducer = (state = {}, action) => {
+  switch (action.type) {
+    case DOUBT_UPDATEUNSOLVE_REQUEST:
+      return { loading: true };
+    case DOUBT_UPDATEUNSOLVE_SUCCESS:
+      return { loading: false, success: true };
+    case DOUBT_UPDATEUNSOLVE_FAIL:
+      return { loading: false, error: action.payload, success: false };
 
     default:
       return state;

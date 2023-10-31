@@ -34,6 +34,13 @@ const MyDoubts = () => {
   const { success: successUpdate } = doubtUpdate;
 
   const doubtDelete = useSelector((state) => state.doubtDelete);
+
+  const doubtUpdateSolve = useSelector((state) => state.doubtUpdateSolve);
+  const { success: successUpdateSolve } = doubtUpdateSolve;
+
+  const doubtUpdateUnsolve = useSelector((state) => state.doubtUpdateUnsolve);
+  const { success: successUpdateUnsolve } = doubtUpdateUnsolve;
+
   const {
     loading: loadingDelete,
     error: errorDelete,
@@ -52,6 +59,8 @@ const MyDoubts = () => {
     successCreate,
     successUpdate,
     successDelete,
+    successUpdateSolve,
+    successUpdateUnsolve,
   ]);
 
   const deleteHandler = (id) => {

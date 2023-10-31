@@ -84,6 +84,44 @@ const getDoubtsSubjects = asyncHandler(async (req, res) => {
   res.json(doubts);
 });
 
+const UpdateDoubtSolved = asyncHandler(async (req, res) => {
+  const doubt = await Doubt.findById(req.params.id);
+
+  if (doubt.creator_id.toString() !== req.student._id.toString()) {
+    res.status(401);
+    throw new Error("You can't perform this action");
+  }
+
+  if (doubt) {
+    doubt.solution_status = "solved";
+
+    const updatedDoubt = await doubt.save();
+    res.json(updatedDoubt);
+  } else {
+    res.status(404);
+    throw new Error("Doubt not found");
+  }
+});
+
+const UpdateDoubtUnsolved = asyncHandler(async (req, res) => {
+  const doubt = await Doubt.findById(req.params.id);
+
+  if (doubt.creator_id.toString() !== req.student._id.toString()) {
+    res.status(401);
+    throw new Error("You can't perform this action");
+  }
+
+  if (doubt) {
+    doubt.solution_status = "unsolved";
+
+    const updatedDoubt = await doubt.save();
+    res.json(updatedDoubt);
+  } else {
+    res.status(404);
+    throw new Error("Doubt not found");
+  }
+});
+
 module.exports = {
   getDoubts,
   CreateDoubt,
@@ -91,4 +129,6 @@ module.exports = {
   UpdateDoubt,
   DeleteDoubt,
   getDoubtsSubjects,
+  UpdateDoubtUnsolved,
+  UpdateDoubtSolved,
 };

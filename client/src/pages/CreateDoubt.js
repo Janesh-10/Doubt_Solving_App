@@ -125,7 +125,7 @@ const CreateDoubt = () => {
             </Form.Group>
             {loading && <Loading size={50} />}
             <Button type="submit" variant="primary">
-              Create Note
+              Create Doubt
             </Button>
             <Button className="mx-2" onClick={resetHandler} variant="danger">
               Reset Feilds

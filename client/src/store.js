@@ -16,6 +16,8 @@ import {
   doubtListReducer,
   doubtTeacherListReducer,
   doubtUpdateReducer,
+  doubtUpdateSolveReducer,
+  doubtUpdateUnsolveReducer,
 } from "./reducers/doubtReducers";
 import {
   teacherLoginReducer,
@@ -43,6 +45,8 @@ const reducer = combineReducers({
   solutionCreate: solutionCreateReducer,
   queryCreate: queryCreateReducer,
   teacherUpdate: teacherUpdateReducer,
+  doubtUpdateSolve: doubtUpdateSolveReducer,
+  doubtUpdateUnsolve: doubtUpdateUnsolveReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

@@ -6,6 +6,8 @@ const {
   UpdateDoubt,
   DeleteDoubt,
   getDoubtsSubjects,
+  UpdateDoubtSolved,
+  UpdateDoubtUnsolved,
 } = require("../controllers/doubtControllers");
 const { protect, protectTeacher } = require("../middlewares/authMiddleware");
 
@@ -19,5 +21,7 @@ router
   .get(getDoubtById)
   .put(protect, UpdateDoubt)
   .delete(protect, DeleteDoubt);
+router.route("/solved/:id").put(protect, UpdateDoubtSolved);
+router.route("/unsolved/:id").put(protect, UpdateDoubtUnsolved);
 
 module.exports = router;
